@@ -1,47 +1,84 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './setAuthToken';
-import { setCurrentUser, logoutUser } from './actions/authentication';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
 
-import Navbar from './components/Navbar';
-import Register from './components/Register';
-import Login from './components/Login';
-import Home from './components/Home';
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { Provider } from "react-redux";
+import store from "./store";
+import FooterPage from './components/design/foot/foot'
+import EditAtelier from './components/editAtelier/editAtelier'
+import ListTout from "./components/liste/liste"
+import Menu from "./components/design/menu/menu"
+import Landing from "./components/layout/Landing";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import PrivateRoute from "./components/private-route/PrivateRoute";
+import Dashboard from "./components/dashboard/Dashboard";
+import NewAtelier from "./components/newAtelier/NewAtelier";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
 
-if(localStorage.jwtToken) {
-  setAuthToken(localStorage.jwtToken);
-  const decoded = jwt_decode(localStorage.jwtToken);
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
-
-  const currentTime = Date.now() / 1000;
-  if(decoded.exp < currentTime) {
+  // Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
     store.dispatch(logoutUser());
-    window.location.href = '/login'
+
+    // Redirect to login
+    window.location.href = "./login";
   }
 }
-
 class App extends Component {
   render() {
     return (
-      <Provider store = { store }>
+      <Provider store={store}>
         <Router>
-            <div>
-              <Navbar />
-                <Route exact path="/" component={ Home } />
-                <div className="container">
-                  <Route exact path="/register" component={ Register } />
-                  <Route exact path="/login" component={ Login } />
+          <div className="container-fluid">
+          <Route exact path="/" component={Menu} />
+          <Route exact path="/tousLesAteliers" component={Menu} />
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-md-3">
+                  <div className="container-fluid">
+                    {/* <h2>Bienvenu sur <span id="nomProject"><span className="aingo">T</span>sara<span className="aingo">Na</span>andro</span></h2> */}
+                  </div>
                 </div>
+                <div className="col-md-9">
+                  <div className="container">
+                  </div>
+                </div>
+              </div>
             </div>
-          </Router>
-        </Provider>
+            
+            
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/newAtelier" component={NewAtelier} />
+            <Route exact path="/tousLesAteliers" component={ListTout} />
+            <Switch>
+              <PrivateRoute exact path="/modifierAtl/:id" component={EditAtelier} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <Route exact path="/foot" component={FooterPage} />
+          <Route exact path="/Particulier" component={FooterPage} />
+          <Route exact path="/" component={FooterPage} />
+          <Route exact path="/tousLesAteliers" component={FooterPage} />
+          </div>
+          
+        </Router>
+      </Provider>
     );
   }
 }
-
 export default App;
