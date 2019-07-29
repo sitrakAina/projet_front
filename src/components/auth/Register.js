@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 import './login.css';
+
 class Register extends Component {
   constructor() {
     super();
@@ -61,11 +62,12 @@ class Register extends Component {
     return (
       <div className="container">
         <div id="feedback-form">
-          <h2 class="header">Crée compte</h2>
+          <h2 class="header">S'inscrire</h2>
           <Link to="/" className="btn-flat waves-effect">
-               <i className="material-icons left">keyboard_backspace</i>Accueil</Link>
+              <i className="material-icons left">keyboard_backspace</i> retour à la acceuil
+          </Link>
           <p className="grey-text text-darken-1">
-                Membre ? <Link to="/login">Connecter</Link>
+                Already have an account? <Link to="/login">Log in</Link>
               </p>
           <div>
             <form noValidate onSubmit={this.onSubmit}>
@@ -75,7 +77,7 @@ class Register extends Component {
                   value={this.state.nom}
                   error={errors.nom}
                   id="nom"
-                  type="text"
+                  type="email"
                   className={classnames("", {
                     invalid: errors.nom
                   })}
@@ -90,7 +92,7 @@ class Register extends Component {
                   value={this.state.prenom}
                   error={errors.prenom}
                   id="prenom"
-                  type="text"
+                  type="email"
                   className={classnames("", {
                     invalid: errors.prenom
                   })}
@@ -120,7 +122,7 @@ class Register extends Component {
                   value={this.state.specialite}
                   error={errors.specialite}
                   id="specialite"
-                  type="text"
+                  type="email"
                   className={classnames("", {
                     invalid: errors.specialite
                   })}
@@ -162,21 +164,22 @@ class Register extends Component {
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                 <button
                   style={{
-                    width: "19.35vh",
-                    borderRadius: "0.387vh",
-                    letterSpacing: "0.193",
+                    width: "150px",
+                    borderRadius: "3px",
+                    letterSpacing: "1.5px",
                     marginTop: "1rem"
                   }}
                   type="submit"
                   className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 >
-                  Crée 
+                  Sign up
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
+  
     );
   }
 }
