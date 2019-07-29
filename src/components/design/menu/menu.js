@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './menu.css'
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse } from "mdbreact";
 
 export default class Menu extends Component {
@@ -24,21 +23,15 @@ export default class Menu extends Component {
     render() {
         return (
             <div>
-                <MDBNavbar color="#d05c62" dark expand="md" id="navbar">
+                <MDBNavbar color="#d05c62" dark expand="md" style={{ marginTop: "20px" }} id="navbar">
                     <MDBNavbarBrand>
-                        <div id="contentlogo"><img src="logo.png" alt="logo" id="logo" /></div>
-                        
+                        <img src="logo.png" alt="logo"/>
                     </MDBNavbarBrand>
                     <MDBNavbarToggler onClick={this.toggleCollapse("navbarCollapse3")} />
                     <MDBCollapse id="navbarCollapse3" isOpen={this.state.collapseID} navbar>
-                        <MDBNavbarNav left>
-                            
-                            <MDBNavItem >
-                                <MDBNavLink to="/" className="nav-header">Accueil</MDBNavLink>
-                            </MDBNavItem>
-                            <MDBNavItem>
-                                <MDBNavLink to="/tousLesAteliers" className="nav-header">Liste</MDBNavLink>
-                            </MDBNavItem>
+                        <MDBNavbarNav left> <MDBNavItem > <MDBNavLink to="#!" className="nav-header">Accueil</MDBNavLink> </MDBNavItem>
+                            <MDBNavItem> <MDBNavLink to="/tousLesAteliers" className="nav-header">Liste</MDBNavLink>
+                            </MDBNavItem> <MDBNavItem> <MDBNavLink to="#!" className="nav-header">Contacts</MDBNavLink> </MDBNavItem>
                         </MDBNavbarNav>
                         <MDBNavbarNav right>
                             <MDBNavItem>
@@ -47,19 +40,6 @@ export default class Menu extends Component {
                         </MDBNavbarNav>
                     </MDBCollapse>
                 </MDBNavbar>
-                <section id="banner">
-                    <div class="bg-color">
-                      <div class="container">
-                        <div class="row">
-                          <div class="inner text-center">
-                            <h1 class="logo-name">Aina ketsika</h1>
-                            <h2>Apprends à cuisiner pour epicier vos sesns</h2>
-                            <p>Les ateliers, Elle sont faite pour vous!!</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                </section>
             </div>
         );
     }
